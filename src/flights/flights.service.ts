@@ -12,8 +12,14 @@ export class FlightsService {
     return flights;
   }
 
-  async getFlight(dto: getFlightDto) {
-    const flight = await this.FlightsDB.findAll(dto);
+  async getFlights(dto: getFlightDto) {
+    const flight = await this.FlightsDB.findAll({
+      where: {
+        departureCity: dto.departureCity,
+        destinationCity: dto.destinationCity,
+        departureDate: dto.departureDate,
+      },
+    });
     return flight;
   }
 }

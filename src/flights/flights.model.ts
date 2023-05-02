@@ -9,11 +9,11 @@ interface FlightCreationAttrs {
   destinationDate: string;
   departureTime: string;
   destinationTime: string;
-  flightFare: string;
-  tax: string;
-  luggageFare: string;
-  seats: string;
-  booked: string;
+  flightFare: number;
+  tax: number;
+  luggageFare: number;
+  seats: number;
+  booked: number;
 }
 
 @Table({ tableName: 'flights' })
@@ -47,18 +47,18 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   destinationTime: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  flightFare: string;
+  @Column({ type: DataType.FLOAT, allowNull: false })
+  flightFare: number;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  tax: string;
+  @Column({ type: DataType.FLOAT, allowNull: false })
+  tax: number;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  luggageFare: string;
+  @Column({ type: DataType.FLOAT, allowNull: false })
+  luggageFare: number;
 
-  @Column({ type: DataType.STRING })
-  seats: string;
+  @Column({ type: DataType.INTEGER })
+  seats: number;
 
-  @Column({ type: DataType.STRING })
-  booked: string;
+  @Column({ type: DataType.INTEGER })
+  booked: number;
 }

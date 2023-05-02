@@ -11,7 +11,7 @@ export class FlightsController {
 
   @ApiOperation({ summary: 'Get all flights' })
   @ApiResponse({ status: 200, type: Array<Flight> })
-  @Get()
+  @Get('/all')
   getAll() {
     return this.flightsService.getAllFlights();
   }
@@ -19,7 +19,7 @@ export class FlightsController {
   @ApiOperation({ summary: 'Get flights by values' })
   @ApiResponse({ status: 200, type: Array<Flight> })
   @Get()
-  getByValue(@Body() flightDto: getFlightDto) {
-    return this.flightsService.getFlight(flightDto);
+  getFlights(@Body() flightDto: getFlightDto) {
+    return this.flightsService.getFlights(flightDto);
   }
 }
