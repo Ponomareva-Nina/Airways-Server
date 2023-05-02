@@ -1,3 +1,6 @@
+<p> Documentation for this REST API is made with help of Swagger and available upon url '.../api/docs' </p>
+<hr>
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
