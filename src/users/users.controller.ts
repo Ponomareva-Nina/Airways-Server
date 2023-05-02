@@ -22,9 +22,4 @@ export class UsersController {
   getAll() {
     return this.usersService.getAllUsers();
   }
-
-  // @Get()
-  // getUserById() {
-  //   return this.usersService.getUser(id);
-  // }
 }

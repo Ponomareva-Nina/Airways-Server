@@ -16,9 +16,4 @@ export class UsersService {
     const users = await this.UserDB.findAll();
     return users;
   }
-
-  // async getUser(id: number) {
-  //   const users = await this.UserDB.findOne(id);
-  //   return users;
-  // }
 }
