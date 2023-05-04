@@ -19,13 +19,13 @@ export class FlightsService {
   }
 
   async getFlights(dto: getFlightDto) {
-    const flight = await this.FlightsDB.findAll({
+    const flights = await this.FlightsDB.findAll({
       where: {
         departureAirport: dto.departureAirport,
         destinationAirport: dto.destinationAirport,
         departureDate: dto.departureDate,
       },
     });
-    return flight;
+    return flights;
   }
 }

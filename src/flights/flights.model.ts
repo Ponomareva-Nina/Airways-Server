@@ -7,7 +7,8 @@ interface FlightCreationAttrs {
   departureAirport: string;
   destinationAirport: string;
   departureDate: string;
-  destinationDate: string;
+  departureDateTime: string;
+  destinationDateTime: string;
   flightFare: number;
   tax: number;
   luggageFare: number;
@@ -42,9 +43,13 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   departureDate: string;
 
+  @ApiProperty({ example: '2024-02-20T15:00:00' })
+  @Column({ type: DataType.STRING, allowNull: false })
+  departureDateTime: string;
+
   @ApiProperty({ example: '2024-02-20T16:30:00' })
   @Column({ type: DataType.STRING, allowNull: false })
-  destinationDate: string;
+  destinationDateTime: string;
 
   @Column({ type: DataType.FLOAT, allowNull: false })
   flightFare: number;

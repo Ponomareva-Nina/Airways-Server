@@ -5,7 +5,8 @@ export class flightDto {
   departureAirport: string;
   destinationAirport: string;
   departureDate: string;
-  destinationDate: string;
+  departureDateTime: string;
+  destinationDateTime: string;
   flightFare: number;
   tax: number;
   luggageFare: number;

@@ -45,10 +45,11 @@ export class FlightsController {
               departureAirport: flight.departureAirport,
               destinationAirport: flight.destinationAirport,
               flightNumber: flight.flightNumber,
-              departureDate: new Date(
+              departureDate: current.toJSON().split('T')[0],
+              departureDateTime: new Date(
                 current.setUTCHours(Number(hours), Number(min), Number(sec)),
               ).toJSON(),
-              destinationDate: new Date(
+              destinationDateTime: new Date(
                 current.setTime(
                   current.getTime() + flight.durationMinutes * 60 * 1000,
                 ),

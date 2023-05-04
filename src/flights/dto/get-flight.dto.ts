@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class getFlightDto {
-  @ApiProperty({ example: 'Moscow' })
+  @ApiProperty({ example: 'GYD' })
   departureAirport: string;
 
-  @ApiProperty({ example: 'London' })
+  @ApiProperty({ example: 'ABZ' })
   destinationAirport: string;
 
   @ApiProperty({
