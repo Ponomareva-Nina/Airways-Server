@@ -1,14 +1,13 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 interface FlightCreationAttrs {
   id: number;
   flightNumber: string;
-  departureCity: string;
-  destinationCity: string;
+  departureAirport: string;
+  destinationAirport: string;
   departureDate: string;
   destinationDate: string;
-  departureTime: string;
-  destinationTime: string;
   flightFare: number;
   tax: number;
   luggageFare: number;
@@ -18,6 +17,7 @@ interface FlightCreationAttrs {
 
 @Table({ tableName: 'flights' })
 export class Flight extends Model<Flight, FlightCreationAttrs> {
+  @ApiProperty({ example: 1 })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -26,26 +26,25 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   })
   id: number;
 
+  @ApiProperty({ example: 'SU-6029' })
   @Column({ type: DataType.STRING, allowNull: false })
   flightNumber: string;
 
+  @ApiProperty({ example: 'SVO' })
   @Column({ type: DataType.STRING, allowNull: false })
-  departureCity: string;
+  departureAirport: string;
 
+  @ApiProperty({ example: 'GYD' })
   @Column({ type: DataType.STRING, allowNull: false })
-  destinationCity: string;
+  destinationAirport: string;
 
+  @ApiProperty({ example: '2024-02-20T15:00:00' })
   @Column({ type: DataType.STRING, allowNull: false })
   departureDate: string;
 
+  @ApiProperty({ example: '2024-02-20T16:30:00' })
   @Column({ type: DataType.STRING, allowNull: false })
   destinationDate: string;
-
-  @Column({ type: DataType.STRING, allowNull: false })
-  departureTime: string;
-
-  @Column({ type: DataType.STRING, allowNull: false })
-  destinationTime: string;
 
   @Column({ type: DataType.FLOAT, allowNull: false })
   flightFare: number;
