@@ -1,4 +1,8 @@
-<<<<<<< HEAD
+
+<p> Documentation for this REST API is made with help of Swagger and available upon url '.../api/docs' </p>
+<hr>
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -74,4 +78,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 =======
 # Airways-Server
->>>>>>> 6f14cbcd270f01d4a76d8b87521a104b0c5aa669
