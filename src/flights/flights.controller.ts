@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FlightsService } from './flights.service';
 import { Flight } from './flights.model';
@@ -21,7 +21,7 @@ export class FlightsController {
   @ApiOperation({ summary: 'Get flights by values' })
   @ApiResponse({ status: 200, type: Array<Flight> })
   @Get()
-  getFlights(@Body() flightDto: getFlightDto) {
+  getFlights(@Query() flightDto: getFlightDto) {
     return this.flightsService.getFlights(flightDto);
   }
 
