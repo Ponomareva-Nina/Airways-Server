@@ -33,6 +33,7 @@ export class FlightsController {
     const from = new Date(data.fromDate);
     const to = new Date(data.toDate);
     const current = from;
+    const result: Array<Promise<Flight>> = [];
 
     while (current < to) {
       const currentDay = current.getDay();
@@ -64,11 +65,13 @@ export class FlightsController {
               seats: flight.seats,
               booked: 0,
             };
-            this.flightsService.createFlight(flightDto);
+            const res = this.flightsService.createFlight(flightDto);
+            result.push(res);
           }
         });
       });
       current.setDate(current.getDate() + 1);
     }
+    return Promise.all(result);
   }
 }
