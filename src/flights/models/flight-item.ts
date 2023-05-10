@@ -1,14 +1,17 @@
-export interface flightsScheduleItem {
+export interface flightItem {
+  id?: number;
+  flightNumber: string;
   departureAirport: string;
   departureCity: string;
   destinationAirport: string;
   destinationCity: string;
-  days: Array<number>;
-  time: string;
+  departureDate: string;
+  departureDateTime: string;
+  destinationDateTime: string;
   durationMinutes: number;
-  flightNumber: string;
   flightFare: number;
   tax: number;
   luggageFare: number;
   seats: number;
+  booked: number;
 }

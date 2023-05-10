@@ -5,10 +5,13 @@ interface FlightCreationAttrs {
   id: number;
   flightNumber: string;
   departureAirport: string;
+  departureCity: string;
   destinationAirport: string;
+  destinationCity: string;
   departureDate: string;
   departureDateTime: string;
   destinationDateTime: string;
+  durationMinutes: number;
   flightFare: number;
   tax: number;
   luggageFare: number;
@@ -31,15 +34,23 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   flightNumber: string;
 
-  @ApiProperty({ example: 'SVO' })
+  @ApiProperty({ example: 'GYD' })
   @Column({ type: DataType.STRING, allowNull: false })
   departureAirport: string;
 
-  @ApiProperty({ example: 'GYD' })
+  @ApiProperty({ example: 'Baku' })
+  @Column({ type: DataType.STRING, allowNull: false })
+  departureCity: string;
+
+  @ApiProperty({ example: 'ABZ' })
   @Column({ type: DataType.STRING, allowNull: false })
   destinationAirport: string;
 
-  @ApiProperty({ example: '2024-02-20T15:00:00' })
+  @ApiProperty({ example: 'Aberdeen' })
+  @Column({ type: DataType.STRING, allowNull: false })
+  destinationCity: string;
+
+  @ApiProperty({ example: '2024-02-20' })
   @Column({ type: DataType.STRING, allowNull: false })
   departureDate: string;
 
@@ -50,6 +61,10 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @ApiProperty({ example: '2024-02-20T16:30:00' })
   @Column({ type: DataType.STRING, allowNull: false })
   destinationDateTime: string;
+
+  @ApiProperty({ example: 90 })
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  durationMinutes: number;
 
   @Column({ type: DataType.FLOAT, allowNull: false })
   flightFare: number;

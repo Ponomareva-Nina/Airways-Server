@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FlightsService } from './flights.service';
 import { Flight } from './flights.model';
 import { getFlightDto } from './dto/get-flight.dto';
-import { createFlightsDto, flightDto } from './dto/create-flight.dto';
+import { createFlightsDto } from './dto/create-flight.dto';
 import { flightsSchedule } from './data/flights-schedule';
+import { flightItem } from './models/flight-item';
 
 @ApiTags('Flights')
 @Controller('flights')
@@ -12,21 +13,21 @@ export class FlightsController {
   constructor(private flightsService: FlightsService) {}
 
   @ApiOperation({ summary: 'Get all flights' })
-  @ApiResponse({ status: 200, type: Array<Flight> })
+  @ApiResponse({ status: 200, type: Flight, isArray: true })
   @Get('/all')
   getAll() {
     return this.flightsService.getAllFlights();
   }
 
   @ApiOperation({ summary: 'Get flights by values' })
-  @ApiResponse({ status: 200, type: Array<Flight> })
+  @ApiResponse({ status: 200, type: Flight, isArray: true })
   @Get()
-  getFlights(@Body() flightDto: getFlightDto) {
+  getFlights(@Query() flightDto: getFlightDto) {
     return this.flightsService.getFlights(flightDto);
   }
 
   @ApiOperation({ summary: 'Generate flights' })
-  @ApiResponse({ status: 200, type: Flight })
+  @ApiResponse({ status: 200, type: Flight, isArray: true })
   @Post()
   generateFlights(@Body() data: createFlightsDto) {
     const from = new Date(data.fromDate);
@@ -41,9 +42,11 @@ export class FlightsController {
           if (day === currentDay) {
             const [hours, min, sec] = flight.time.split(':');
 
-            const flightDto: flightDto = {
+            const flightDto: flightItem = {
               departureAirport: flight.departureAirport,
+              departureCity: flight.departureCity,
               destinationAirport: flight.destinationAirport,
+              destinationCity: flight.destinationCity,
               flightNumber: flight.flightNumber,
               departureDate: current.toJSON().split('T')[0],
               departureDateTime: new Date(
@@ -54,10 +57,12 @@ export class FlightsController {
                   current.getTime() + flight.durationMinutes * 60 * 1000,
                 ),
               ).toJSON(),
+              durationMinutes: flight.durationMinutes,
               flightFare: flight.flightFare,
               tax: flight.tax,
               luggageFare: flight.luggageFare,
               seats: flight.seats,
+              booked: 0,
             };
             this.flightsService.createFlight(flightDto);
           }
