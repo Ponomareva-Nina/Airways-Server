@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { flightItem } from 'src/flights/models/flight-item';
 
 interface UserCreationAttrs {
   email: string;
@@ -22,7 +23,7 @@ export class User extends Model<User, UserCreationAttrs> {
   email: string;
 
   @ApiProperty({ example: 'myPassword123' })
-  @Column({ type: DataType.STRING, unique: true })
+  @Column({ type: DataType.STRING })
   password: string;
 
   @ApiProperty({ example: 'Nina' })
@@ -49,5 +50,7 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: true })
   citizenship: string;
 
-  // TO DO: add column with user bookings
+  @ApiProperty({ example: [] })
+  @Column({ type: DataType.ARRAY(DataType.JSON), allowNull: true })
+  bookings: Array<flightItem>;
 }

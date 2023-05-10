@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Flight } from './flights.model';
 import { InjectModel } from '@nestjs/sequelize';
+import { flightItem } from './models/flight-item';
 import { getFlightDto } from './dto/get-flight.dto';
-import { flightDto } from './dto/create-flight.dto';
 
 @Injectable()
 export class FlightsService {
@@ -13,7 +13,7 @@ export class FlightsService {
     return flights;
   }
 
-  async createFlight(dto: flightDto) {
+  async createFlight(dto: flightItem) {
     const flight = await this.FlightsDB.create(dto);
     return flight;
   }

@@ -3,7 +3,9 @@ import { flightsScheduleItem } from '../models/flight-schedule-item';
 export const flightsSchedule: Array<flightsScheduleItem> = [
   {
     departureAirport: 'GYD',
+    departureCity: 'Baku',
     destinationAirport: 'ABZ',
+    destinationCity: 'Aberdeen',
     days: [0, 2, 4, 6],
     time: '15:00:00',
     durationMinutes: 90,
@@ -15,7 +17,9 @@ export const flightsSchedule: Array<flightsScheduleItem> = [
   },
   {
     departureAirport: 'ABZ',
+    departureCity: 'Aberdeen',
     destinationAirport: 'GYD',
+    destinationCity: 'Baku',
     days: [1, 3, 5],
     time: '09:00:00',
     durationMinutes: 120,

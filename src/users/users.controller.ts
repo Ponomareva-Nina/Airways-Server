@@ -17,7 +17,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Get all users' })
-  @ApiResponse({ status: 200, type: Array<User> })
+  @ApiResponse({ status: 200, type: [User] })
   @Get()
   getAll() {
     return this.usersService.getAllUsers();
