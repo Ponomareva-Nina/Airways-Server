@@ -13,9 +13,18 @@ export class FlightsService {
     return flights;
   }
 
-  async createFlight(dto: flightItem) {
-    const flight = await this.FlightsDB.create(dto);
-    return flight;
+  async createFlight(dto: flightItem): Promise<Flight> {
+    const isExist = await this.FlightsDB.findOne({
+      where: {
+        departureAirport: dto.departureAirport,
+        destinationAirport: dto.destinationAirport,
+        departureDate: dto.departureDate,
+      },
+    });
+    if (!isExist) {
+      const flight = await this.FlightsDB.create(dto);
+      return flight;
+    }
   }
 
   async getFlights(dto: getFlightDto) {
