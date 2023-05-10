@@ -66,18 +66,23 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @Column({ type: DataType.INTEGER, allowNull: false })
   durationMinutes: number;
 
+  @ApiProperty({ example: 120.5 })
   @Column({ type: DataType.FLOAT, allowNull: false })
   flightFare: number;
 
+  @ApiProperty({ example: 15.5 })
   @Column({ type: DataType.FLOAT, allowNull: false })
   tax: number;
 
+  @ApiProperty({ example: 20 })
   @Column({ type: DataType.FLOAT, allowNull: false })
   luggageFare: number;
 
+  @ApiProperty({ example: 60 })
   @Column({ type: DataType.INTEGER })
   seats: number;
 
+  @ApiProperty({ example: 10 })
   @Column({ type: DataType.INTEGER })
   booked: number;
 }
