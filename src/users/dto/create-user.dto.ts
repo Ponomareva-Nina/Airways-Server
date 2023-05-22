@@ -20,7 +20,7 @@ export class createUserDto {
   sex: string;
 
   @ApiProperty({ example: '+79811234567', required: false })
-  pnone: string;
+  phone: string;
 
   @ApiProperty({ example: 'Russian Federation', required: false })
   citizenship: string;

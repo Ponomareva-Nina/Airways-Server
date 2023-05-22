@@ -44,7 +44,7 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @ApiProperty({ example: '+79811234567' })
   @Column({ type: DataType.STRING, unique: true })
-  pnone: string;
+  phone: string;
 
   @ApiProperty({ example: 'Russian Federation' })
   @Column({ type: DataType.STRING, allowNull: true })
