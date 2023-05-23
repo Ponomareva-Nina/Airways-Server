@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
-import { flightItem } from 'src/flights/models/flight-item';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { Booking } from 'src/booking/booking.model';
 
 interface UserCreationAttrs {
   email: string;
@@ -51,6 +51,6 @@ export class User extends Model<User, UserCreationAttrs> {
   citizenship: string;
 
   @ApiProperty({ example: [] })
-  @Column({ type: DataType.ARRAY(DataType.JSON), allowNull: true })
-  bookings: Array<flightItem>;
+  @HasMany(() => Booking)
+  bookings: Array<Booking>;
 }

@@ -8,7 +8,6 @@ import {
 } from '@nestjs/swagger';
 import { createUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { User } from 'src/users/users.model';
 import { Token } from './models/token.model';
 import { authUserDto } from './dto/auth-user.dto';
 
