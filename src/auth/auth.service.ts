@@ -10,6 +10,7 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/users.model';
 import { authUserDto } from './dto/auth-user.dto';
+import { TokenPayload } from './models/token-payload.model';
 
 @Injectable()
 export class AuthService {
@@ -67,5 +68,20 @@ export class AuthService {
     }
 
     throw new UnauthorizedException({ message: 'Incorrect email or password' });
+  }
+
+  public async getUserByToken(token: string) {
+    const userId = this.getIdFromToken(token);
+    if (userId) {
+      return await this.userService.getUserById(userId);
+    }
+    return null;
+  }
+
+  private getIdFromToken(token: string) {
+    const decoded = this.jwtService.decode(token);
+    if (decoded) {
+      return (decoded as TokenPayload).id;
+    }
   }
 }

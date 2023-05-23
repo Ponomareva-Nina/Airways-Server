@@ -34,4 +34,13 @@ export class UsersService {
     });
     return user;
   }
+
+  async getUserById(id: number) {
+    const user = await this.UserDB.findOne({
+      where: {
+        id,
+      },
+    });
+    return user;
+  }
 }

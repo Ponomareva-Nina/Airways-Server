@@ -18,7 +18,7 @@ import { ContactInfo } from './models/contact-info.model';
 import { User } from 'src/users/users.model';
 
 interface BookingCreationAttrs {
-  id: number;
+  userId: number;
   forwardFlight: Flight;
   returnFlight: Flight;
   passengers: Passenger[];
@@ -52,7 +52,7 @@ export class Booking extends Model<Booking, BookingCreationAttrs> {
   @Column({
     type: DataType.ARRAY(DataType.JSON),
   })
-  passengers: Array<Passenger>;
+  passengers: Passenger[];
 
   @ApiProperty({ example: ContactInfoExample })
   @Column({
