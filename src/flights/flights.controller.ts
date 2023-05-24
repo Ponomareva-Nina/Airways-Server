@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FlightsService } from './flights.service';
 import { Flight } from './flights.model';
@@ -24,6 +32,17 @@ export class FlightsController {
   @Get()
   getFlights(@Query() flightDto: getFlightDto) {
     return this.flightsService.getFlights(flightDto);
+  }
+
+  @ApiOperation({ summary: 'Get flight by id' })
+  @ApiResponse({ status: 200, type: Flight })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Flight not found',
+  })
+  @Get(':id')
+  getFlightById(@Param('id') id: string) {
+    return this.flightsService.getFlightById(id);
   }
 
   @ApiOperation({ summary: 'Generate flights' })

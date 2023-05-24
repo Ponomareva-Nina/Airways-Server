@@ -16,4 +16,31 @@ export class UsersService {
     const users = await this.UserDB.findAll();
     return users;
   }
+
+  async getUserByEmail(email: string) {
+    const user = await this.UserDB.findOne({
+      where: {
+        email,
+      },
+    });
+    return user;
+  }
+
+  async getUserByPhone(phone: string) {
+    const user = await this.UserDB.findOne({
+      where: {
+        phone: phone,
+      },
+    });
+    return user;
+  }
+
+  async getUserById(id: number) {
+    const user = await this.UserDB.findOne({
+      where: {
+        id,
+      },
+    });
+    return user;
+  }
 }
