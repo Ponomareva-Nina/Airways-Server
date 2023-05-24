@@ -11,6 +11,8 @@ import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/users.model';
 import { authUserDto } from './dto/auth-user.dto';
 import { TokenPayload } from './models/token-payload.model';
+import { UserData } from './models/userData';
+import { Token } from './models/token.model';
 
 @Injectable()
 export class AuthService {
@@ -78,10 +80,39 @@ export class AuthService {
     return null;
   }
 
+  public async getUserData(dto: Token): Promise<UserData> {
+    const userId = this.getIdFromToken(dto.token);
+    if (!userId) {
+      throw new HttpException('Incorrect token', HttpStatus.BAD_REQUEST);
+    }
+    const user = await this.userService.getUserById(userId);
+    if (!user) {
+      throw new HttpException('User is not found', HttpStatus.BAD_REQUEST);
+    }
+    const userData: UserData = {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      dateOfBirth: user.dateOfBirth,
+      sex: user.sex,
+      phone: user.phone,
+      citizenship: user.citizenship,
+    };
+    return userData;
+  }
+
   private getIdFromToken(token: string) {
-    const decoded = this.jwtService.decode(token);
-    if (decoded) {
-      return (decoded as TokenPayload).id;
+    try {
+      const decoded = this.jwtService.decode(token);
+      if (decoded) {
+        return (decoded as TokenPayload).id || null;
+      }
+    } catch (error: unknown) {
+      if (error) {
+        console.log((error as Error).message);
+      }
+      return null;
     }
   }
 }
