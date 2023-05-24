@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -28,6 +29,11 @@ export class BookingController {
 
   @ApiOperation({ summary: 'Add a booking' })
   @ApiResponse({ status: 200, type: Booking })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description:
+      'Booking already exists or one of the passengers already registered for this flight.',
+  })
   @Post()
   addBooking(@Body() dto: createBookingDto) {
     return this.bookingService.addBooking(dto);
@@ -41,7 +47,11 @@ export class BookingController {
   }
 
   @ApiOperation({ summary: 'Delete the booking' })
-  @ApiResponse({ status: 200, type: Booking })
+  @ApiResponse({ status: 200, type: Array<void>, isArray: true })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Booking with this id does not exist',
+  })
   @Delete(':id')
   deleteBooking(@Param('id') id: string) {
     return this.bookingService.deleteBooking(id);
