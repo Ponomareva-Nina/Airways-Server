@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { Flight } from './flights.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { flightItem } from './models/flight-item';
@@ -38,5 +38,23 @@ export class FlightsService {
       },
     });
     return flights;
+  }
+
+  async bookSeatsOnFlight(id: number, seats: number): Promise<void> {
+    const flight = await this.FlightsDB.findOne({
+      where: { id },
+    });
+    if (!flight) {
+      throw new BadRequestException('flight not found');
+    }
+    const bookedSeats = flight.booked;
+    await this.FlightsDB.update(
+      {
+        booked: bookedSeats + seats,
+      },
+      {
+        where: { id: Number(id) },
+      },
+    );
   }
 }

@@ -1,10 +1,8 @@
-import { Flight } from 'src/flights/flights.model';
 import { Passenger } from '../models/passenger.model';
 import { ContactInfo } from '../models/contact-info.model';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   ContactInfoExample,
-  FlightExample,
   PassenegerExample,
 } from 'src/swagger/examples';
 
@@ -15,11 +13,11 @@ export class createBookingDto {
   })
   token: string;
 
-  @ApiProperty({ example: FlightExample })
-  forwardFlight: Flight;
+  @ApiProperty({ example: 19 })
+  forwardFlightId: number;
 
-  @ApiProperty({ example: FlightExample })
-  returnFlight: Flight;
+  @ApiProperty({ example: 59 })
+  returnFlightId: number;
 
   @ApiProperty({ example: [PassenegerExample] })
   passengers: Passenger[];

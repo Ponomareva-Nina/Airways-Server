@@ -19,8 +19,8 @@ import { User } from 'src/users/users.model';
 
 interface BookingCreationAttrs {
   userId: number;
-  forwardFlight: Flight;
-  returnFlight: Flight;
+  forwardFlightId: number;
+  returnFlightId: number;
   passengers: Passenger[];
   contactInfo: ContactInfo;
 }
@@ -36,17 +36,17 @@ export class Booking extends Model<Booking, BookingCreationAttrs> {
   })
   id: number;
 
-  @ApiProperty({ example: FlightExample })
+  @ApiProperty({ example: 12 })
   @Column({
     type: DataType.JSON,
   })
-  forwardFlight: Flight;
+  forwardFlightId: number;
 
-  @ApiProperty({ example: FlightExample })
+  @ApiProperty({ example: 14 })
   @Column({
     type: DataType.JSON,
   })
-  returnFlight: Flight;
+  returnFlightId: number;
 
   @ApiProperty({ example: [PassenegerExample] })
   @Column({

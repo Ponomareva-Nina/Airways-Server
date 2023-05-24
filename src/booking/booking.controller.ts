@@ -13,7 +13,7 @@ import { Booking } from './booking.model';
 import { createBookingDto } from './dto/create-booking.dto';
 import { Token } from 'src/auth/models/token.model';
 
-@ApiTags()
+@ApiTags('Bookings')
 @Controller('booking')
 export class BookingController {
   constructor(private bookingService: BookingService) {}

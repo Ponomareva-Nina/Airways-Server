@@ -25,8 +25,8 @@ export class BookingService {
 
     const booking = await this.bookingsDB.create({
       userId: user.id,
-      forwardFlight: dto.forwardFlight,
-      returnFlight: dto.returnFlight || null,
+      forwardFlightId: dto.forwardFlightId,
+      returnFlightId: dto.returnFlightId || null,
       passengers: dto.passengers,
       contactInfo: dto.contactInfo,
     });
@@ -59,8 +59,8 @@ export class BookingService {
 
     await this.bookingsDB.update(
       {
-        forwardFlight: dto.forwardFlight,
-        returnFlight: dto.returnFlight || null,
+        forwardFlightId: dto.forwardFlightId,
+        returnFlightId: dto.returnFlightId || null,
         passengers: dto.passengers,
         contactInfo: dto.contactInfo,
       },
@@ -85,8 +85,8 @@ export class BookingService {
     if (!dto.token) {
       mistakes.push('token is not provided');
     }
-    if (!dto.forwardFlight) {
-      mistakes.push('forward flight is not provided');
+    if (!dto.forwardFlightId) {
+      mistakes.push('forward flight id is not provided');
     }
     if (!dto.contactInfo) {
       mistakes.push('contact info is not provided');
