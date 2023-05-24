@@ -61,6 +61,7 @@ export class Booking extends Model<Booking, BookingCreationAttrs> {
   contactInfo: ContactInfo;
 
   @ForeignKey(() => User)
+  @ApiProperty({ example: 3 })
   @Column({
     type: DataType.INTEGER,
   })

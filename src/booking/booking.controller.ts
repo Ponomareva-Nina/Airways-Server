@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BookingService } from './booking.service';
 import { Booking } from './booking.model';
@@ -22,5 +30,12 @@ export class BookingController {
   @Post()
   addBooking(@Body() dto: createBookingDto) {
     return this.bookingService.addBooking(dto);
+  }
+
+  @ApiOperation({ summary: 'Edit a booking' })
+  @ApiResponse({ status: 200, type: Booking })
+  @Patch(':id')
+  editBooking(@Param('id') id: string, @Body() dto: createBookingDto) {
+    return this.bookingService.editBooking(id, dto);
   }
 }
