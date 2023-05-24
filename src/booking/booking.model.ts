@@ -7,13 +7,8 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { Flight } from 'src/flights/flights.model';
 import { Passenger } from './models/passenger.model';
-import {
-  ContactInfoExample,
-  FlightExample,
-  PassenegerExample,
-} from 'src/swagger/examples';
+import { ContactInfoExample, PassenegerExample } from 'src/swagger/examples';
 import { ContactInfo } from './models/contact-info.model';
 import { User } from 'src/users/users.model';
 
@@ -38,13 +33,13 @@ export class Booking extends Model<Booking, BookingCreationAttrs> {
 
   @ApiProperty({ example: 12 })
   @Column({
-    type: DataType.JSON,
+    type: DataType.INTEGER,
   })
   forwardFlightId: number;
 
   @ApiProperty({ example: 14 })
   @Column({
-    type: DataType.JSON,
+    type: DataType.INTEGER,
   })
   returnFlightId: number;
 

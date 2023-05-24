@@ -23,6 +23,13 @@ export class BookingService {
       throw new BadRequestException('Incorrect token');
     }
 
+    const isBookingExist = await this.isUserBookingExist(dto, user.id);
+    if (isBookingExist) {
+      throw new BadRequestException(
+        'Booking already exists or one of the passengers already registered for this flight.',
+      );
+    }
+
     const booking = await this.bookingsDB.create({
       userId: user.id,
       forwardFlightId: dto.forwardFlightId,
@@ -95,5 +102,41 @@ export class BookingService {
       mistakes.push('passengers info is not provided');
     }
     return mistakes;
+  }
+
+  private async isUserBookingExist(dto: createBookingDto, userId: number) {
+    const bookings = await this.bookingsDB.findAll({
+      where: {
+        userId,
+        forwardFlightId: dto.forwardFlightId,
+        returnFlightId: dto.returnFlightId,
+      },
+    });
+    let isDuplicated = false;
+    if (bookings.length) {
+      bookings.forEach((booking) => {
+        booking.passengers.forEach((item) => {
+          const passenger = dto.passengers.find(
+            (pas) =>
+              pas.firstName === item.firstName &&
+              pas.lastName === item.lastName &&
+              pas.dateOfBirth === item.dateOfBirth,
+          );
+          if (passenger) {
+            isDuplicated = true;
+            return;
+          }
+        });
+      });
+    }
+    return isDuplicated;
+  }
+
+  async deleteBooking(id: string) {
+    const booking = await this.getBookingById(Number(id));
+    if (!booking) {
+      throw new BadRequestException('Booking with this id does not exist');
+    }
+    return await booking.destroy();
   }
 }

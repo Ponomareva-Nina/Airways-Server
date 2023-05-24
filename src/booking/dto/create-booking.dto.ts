@@ -1,10 +1,7 @@
 import { Passenger } from '../models/passenger.model';
 import { ContactInfo } from '../models/contact-info.model';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  ContactInfoExample,
-  PassenegerExample,
-} from 'src/swagger/examples';
+import { ContactInfoExample, PassenegerExample } from 'src/swagger/examples';
 
 export class createBookingDto {
   @ApiProperty({
