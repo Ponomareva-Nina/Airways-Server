@@ -13,6 +13,18 @@ export class FlightsService {
     return flights;
   }
 
+  async getFlightById(id: string) {
+    const flight = await this.FlightsDB.findOne({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!flight) {
+      throw new BadRequestException('flight not found');
+    }
+    return flight;
+  }
+
   async createFlight(dto: flightItem) {
     const isExist = await this.FlightsDB.findOne({
       where: {
