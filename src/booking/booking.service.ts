@@ -4,12 +4,14 @@ import { Booking } from './booking.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { AuthService } from 'src/auth/auth.service';
 import { Token } from 'src/auth/models/token.model';
+import { FlightsService } from 'src/flights/flights.service';
 
 @Injectable()
 export class BookingService {
   constructor(
     @InjectModel(Booking) private bookingsDB: typeof Booking,
     private authService: AuthService,
+    private flightsService: FlightsService,
   ) {}
 
   async addBooking(dto: createBookingDto) {
@@ -37,6 +39,7 @@ export class BookingService {
       passengers: dto.passengers,
       contactInfo: dto.contactInfo,
     });
+    await this.addSeats(dto);
     return booking;
   }
 
@@ -75,6 +78,8 @@ export class BookingService {
         where: { id: Number(id) },
       },
     );
+    await this.deleteSeats(booking);
+    await this.addSeats(dto);
     return await this.getBookingById(Number(id));
   }
 
@@ -137,6 +142,33 @@ export class BookingService {
     if (!booking) {
       throw new BadRequestException('Booking with this id does not exist');
     }
+    await this.deleteSeats(booking);
     return await booking.destroy();
+  }
+
+  private async addSeats(dto: createBookingDto) {
+    await this.flightsService.updateSeatsOnFlight(
+      dto.forwardFlightId,
+      dto.passengers.length,
+    );
+    if (dto.returnFlightId) {
+      await this.flightsService.updateSeatsOnFlight(
+        dto.returnFlightId,
+        dto.passengers.length,
+      );
+    }
+  }
+
+  private async deleteSeats(booking: Booking) {
+    await this.flightsService.updateSeatsOnFlight(
+      booking.forwardFlightId,
+      booking.passengers.length * -1,
+    );
+    if (booking.returnFlightId) {
+      await this.flightsService.updateSeatsOnFlight(
+        booking.returnFlightId,
+        booking.passengers.length * -1,
+      );
+    }
   }
 }

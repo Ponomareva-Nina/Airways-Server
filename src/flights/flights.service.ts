@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Flight } from './flights.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { flightItem } from './models/flight-item';
@@ -52,7 +57,7 @@ export class FlightsService {
     return flights;
   }
 
-  async bookSeatsOnFlight(id: number, seats: number): Promise<void> {
+  async updateSeatsOnFlight(id: number, seats: number): Promise<void> {
     const flight = await this.FlightsDB.findOne({
       where: { id },
     });
@@ -60,6 +65,12 @@ export class FlightsService {
       throw new BadRequestException('flight not found');
     }
     const bookedSeats = flight.booked;
+    if (bookedSeats + seats > flight.seats) {
+      throw new HttpException(
+        `lack of seats for the flight ${flight.departureCity} - ${flight.destinationCity}`,
+        HttpStatus.FORBIDDEN,
+      );
+    }
     await this.FlightsDB.update(
       {
         booked: bookedSeats + seats,
