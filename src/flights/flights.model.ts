@@ -17,6 +17,11 @@ interface FlightCreationAttrs {
   luggageFare: number;
   seats: number;
   booked: number;
+  direct: boolean;
+  transferAirport: string;
+  transferCity: string;
+  transferDuration: number;
+  transferFlightNumber: string;
 }
 
 @Table({ tableName: 'flights' })
@@ -42,11 +47,11 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   departureCity: string;
 
-  @ApiProperty({ example: 'ABZ' })
+  @ApiProperty({ example: 'AMS' })
   @Column({ type: DataType.STRING, allowNull: false })
   destinationAirport: string;
 
-  @ApiProperty({ example: 'Aberdeen' })
+  @ApiProperty({ example: 'Amsterdam' })
   @Column({ type: DataType.STRING, allowNull: false })
   destinationCity: string;
 
@@ -85,4 +90,24 @@ export class Flight extends Model<Flight, FlightCreationAttrs> {
   @ApiProperty({ example: 10 })
   @Column({ type: DataType.INTEGER })
   booked: number;
+
+  @ApiProperty({ example: true })
+  @Column({ type: DataType.BOOLEAN })
+  direct: boolean;
+
+  @ApiProperty({ example: 'IST' })
+  @Column({ type: DataType.STRING, allowNull: true })
+  transferAirport: string;
+
+  @ApiProperty({ example: 'Istanbul' })
+  @Column({ type: DataType.STRING, allowNull: true })
+  transferCity: string;
+
+  @ApiProperty({ example: 'Istanbul' })
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  transferDuration: number;
+
+  @ApiProperty({ example: 'MD-223' })
+  @Column({ type: DataType.STRING, allowNull: true })
+  transferFlightNumber: string;
 }

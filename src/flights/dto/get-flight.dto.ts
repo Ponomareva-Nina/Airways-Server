@@ -4,11 +4,11 @@ export class getFlightDto {
   @ApiProperty({ example: 'GYD' })
   departureAirport: string;
 
-  @ApiProperty({ example: 'ABZ' })
+  @ApiProperty({ example: 'AMS' })
   destinationAirport: string;
 
   @ApiProperty({
-    example: '2024-02-19',
+    example: '2024-02-20',
     description: 'date in format YYYY-MM-DD',
   })
   departureDate: string;
