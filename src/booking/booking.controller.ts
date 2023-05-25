@@ -53,7 +53,7 @@ export class BookingController {
     description: 'Booking with this id does not exist',
   })
   @Delete(':id')
-  deleteBooking(@Param('id') id: string) {
-    return this.bookingService.deleteBooking(id);
+  deleteBooking(@Param('id') id: string, @Query() dto: Token) {
+    return this.bookingService.deleteBooking(id, dto);
   }
 }

@@ -19,11 +19,7 @@ export class BookingService {
     if (dtoMistakes.length) {
       throw new BadRequestException(dtoMistakes);
     }
-
-    const user = await this.authService.getUserByToken(dto.token);
-    if (!user) {
-      throw new BadRequestException('Incorrect token');
-    }
+    const user = await this.checkUser(dto);
 
     const isBookingExist = await this.isUserBookingExist(dto, user.id);
     if (isBookingExist) {
@@ -44,10 +40,7 @@ export class BookingService {
   }
 
   async getBookings(dto: Token) {
-    const user = await this.authService.getUserByToken(dto.token);
-    if (!user) {
-      throw new BadRequestException('Incorrect token');
-    }
+    const user = await this.checkUser(dto);
     const bookings = await this.bookingsDB.findAll({
       where: {
         userId: user.id,
@@ -57,10 +50,7 @@ export class BookingService {
   }
 
   async editBooking(id: string, dto: createBookingDto) {
-    const user = await this.authService.getUserByToken(dto.token);
-    if (!user) {
-      throw new BadRequestException('Incorrect token');
-    }
+    await this.checkUser(dto);
 
     const booking = await this.getBookingById(Number(id));
     if (!booking) {
@@ -137,7 +127,8 @@ export class BookingService {
     return isDuplicated;
   }
 
-  async deleteBooking(id: string) {
+  async deleteBooking(id: string, dto: Token) {
+    await this.checkUser(dto);
     const booking = await this.getBookingById(Number(id));
     if (!booking) {
       throw new BadRequestException('Booking with this id does not exist');
@@ -170,5 +161,13 @@ export class BookingService {
         booking.passengers.length * -1,
       );
     }
+  }
+
+  private async checkUser(dto: Token) {
+    const user = await this.authService.getUserByToken(dto.token);
+    if (!user) {
+      throw new BadRequestException('Incorrect token');
+    }
+    return user;
   }
 }
