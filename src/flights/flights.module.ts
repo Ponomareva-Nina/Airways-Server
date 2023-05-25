@@ -8,5 +8,6 @@ import { Flight } from './flights.model';
   providers: [FlightsService],
   controllers: [FlightsController],
   imports: [SequelizeModule.forFeature([Flight])],
+  exports: [FlightsService],
 })
 export class FlightsModule {}
