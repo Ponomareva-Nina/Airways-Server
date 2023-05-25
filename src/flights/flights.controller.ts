@@ -83,6 +83,11 @@ export class FlightsController {
               luggageFare: flight.luggageFare,
               seats: flight.seats,
               booked: 0,
+              direct: flight.direct,
+              transferAirport: flight.transferAirport || null,
+              transferCity: flight.transferCity || null,
+              transferDuration: flight.transferDuration || null,
+              transferFlightNumber: flight.transferFlightNumber || null,
             };
             const res = this.flightsService.createFlight(flightDto);
             result.push(res);

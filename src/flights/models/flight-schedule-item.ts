@@ -11,4 +11,9 @@ export interface flightsScheduleItem {
   tax: number;
   luggageFare: number;
   seats: number;
+  direct: boolean;
+  transferAirport?: string;
+  transferCity?: string;
+  transferDuration?: number;
+  transferFlightNumber?: string;
 }

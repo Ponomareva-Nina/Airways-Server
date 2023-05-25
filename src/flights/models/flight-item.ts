@@ -14,4 +14,9 @@ export interface flightItem {
   luggageFare: number;
   seats: number;
   booked: number;
+  direct: boolean;
+  transferAirport: string | null;
+  transferCity: string | null;
+  transferDuration: number | null;
+  transferFlightNumber: string | null;
 }

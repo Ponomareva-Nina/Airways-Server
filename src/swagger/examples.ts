@@ -7,8 +7,8 @@ export const FlightExample: flightItem = {
   flightNumber: 'SU-6029',
   departureAirport: 'GYD',
   departureCity: 'Baku',
-  destinationAirport: 'ABZ',
-  destinationCity: 'Aberdeen',
+  destinationAirport: 'AMS',
+  destinationCity: 'Amsterdam',
   departureDate: '2024-02-20',
   departureDateTime: '2024-02-20T15:00:00',
   destinationDateTime: '2024-02-20T16:30:00',
@@ -18,6 +18,11 @@ export const FlightExample: flightItem = {
   luggageFare: 20,
   seats: 60,
   booked: 10,
+  direct: false,
+  transferAirport: 'IST',
+  transferCity: 'Istanbul',
+  transferDuration: 65,
+  transferFlightNumber: 'MK-785',
 };
 
 export const PassenegerExample: Passenger = {
