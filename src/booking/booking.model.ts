@@ -14,6 +14,7 @@ import { User } from 'src/users/users.model';
 
 interface BookingCreationAttrs {
   userId: number;
+  paid: boolean;
   forwardFlightId: number;
   returnFlightId: number;
   passengers: Passenger[];
@@ -30,6 +31,10 @@ export class Booking extends Model<Booking, BookingCreationAttrs> {
     primaryKey: true,
   })
   id: number;
+
+  @ApiProperty({ example: false })
+  @Column({ type: DataType.BOOLEAN })
+  paid: boolean;
 
   @ApiProperty({ example: 12 })
   @Column({

@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { AuthService } from 'src/auth/auth.service';
 import { Token } from 'src/auth/models/token.model';
 import { FlightsService } from 'src/flights/flights.service';
+import { FullBookingData } from './models/full-booking';
 
 @Injectable()
 export class BookingService {
@@ -30,13 +31,35 @@ export class BookingService {
 
     const booking = await this.bookingsDB.create({
       userId: user.id,
+      paid: dto.paid,
       forwardFlightId: dto.forwardFlightId,
       returnFlightId: dto.returnFlightId || null,
       passengers: dto.passengers,
       contactInfo: dto.contactInfo,
     });
     await this.addSeats(dto);
-    return booking;
+
+    return await this.getFullBookingData(booking);
+  }
+
+  private async getFullBookingData(booking: Booking): Promise<FullBookingData> {
+    const response: FullBookingData = {
+      id: booking.id,
+      paid: booking.paid,
+      forwardFlightId: booking.forwardFlightId,
+      returnFlightId: booking.returnFlightId || null,
+      passengers: booking.passengers,
+      contactInfo: booking.contactInfo,
+      forwardFlightData: await this.flightsService.getFlightById(
+        booking.forwardFlightId.toString(),
+      ),
+      returnFlightData:
+        (await this.flightsService.getFlightById(
+          booking.returnFlightId.toString(),
+        )) || null,
+    };
+
+    return response;
   }
 
   async getBookings(dto: Token) {
@@ -46,7 +69,14 @@ export class BookingService {
         userId: user.id,
       },
     });
-    return bookings;
+
+    const userBookings = [];
+
+    for (const booking of bookings) {
+      const full = await this.getFullBookingData(booking);
+      userBookings.push(full);
+    }
+    return userBookings;
   }
 
   async editBooking(id: string, dto: createBookingDto) {

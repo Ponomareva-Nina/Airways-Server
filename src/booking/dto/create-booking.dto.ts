@@ -10,6 +10,9 @@ export class createBookingDto {
   })
   token: string;
 
+  @ApiProperty({ example: false })
+  paid: boolean;
+
   @ApiProperty({ example: 19 })
   forwardFlightId: number;
 
