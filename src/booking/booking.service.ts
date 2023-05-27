@@ -22,12 +22,12 @@ export class BookingService {
     }
     const user = await this.checkUser(dto);
 
-    // const isBookingExist = await this.isUserBookingExist(dto, user.id);
-    // if (isBookingExist) {
-    //   throw new BadRequestException(
-    //     'Booking already exists or one of the passengers already registered for this flight.',
-    //   );
-    // }
+    const isBookingExist = await this.isUserBookingExist(dto, user.id);
+    if (isBookingExist) {
+      throw new BadRequestException(
+        'Booking already exists or one of the passengers already registered for this flight.',
+      );
+    }
 
     const booking = await this.bookingsDB.create({
       userId: user.id,
