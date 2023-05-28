@@ -55,9 +55,8 @@ export class FlightsController {
     const result: Array<Promise<Flight>> = [];
 
     while (current < to) {
-      const currentDay = current.getDay();
-
       flightsSchedule.forEach((flight) => {
+        const currentDay = current.getDay();
         flight.days.forEach((day) => {
           if (day === currentDay) {
             const [hours, min, sec] = flight.time.split(':');
