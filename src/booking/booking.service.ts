@@ -53,10 +53,11 @@ export class BookingService {
       forwardFlightData: await this.flightsService.getFlightById(
         booking.forwardFlightId.toString(),
       ),
-      returnFlightData:
-        (await this.flightsService.getFlightById(
-          booking.returnFlightId.toString(),
-        )) || null,
+      returnFlightData: booking.returnFlightId
+        ? await this.flightsService.getFlightById(
+            booking.returnFlightId?.toString(),
+          )
+        : null,
     };
 
     return response;
