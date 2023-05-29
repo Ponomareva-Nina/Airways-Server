@@ -90,6 +90,7 @@ export class BookingService {
 
     await this.bookingsDB.update(
       {
+        paid: dto.paid,
         forwardFlightId: dto.forwardFlightId,
         returnFlightId: dto.returnFlightId || null,
         passengers: dto.passengers,
