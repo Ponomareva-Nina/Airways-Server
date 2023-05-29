@@ -35,7 +35,7 @@ export class FlightsService {
       where: {
         departureAirport: dto.departureAirport,
         destinationAirport: dto.destinationAirport,
-        departureDate: dto.departureDate,
+        departureDateTime: dto.departureDateTime,
       },
     });
     if (!isExist) {

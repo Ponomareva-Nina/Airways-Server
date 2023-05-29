@@ -56,9 +56,10 @@ export class FlightsController {
 
     while (current < to) {
       flightsSchedule.forEach((flight) => {
-        const currentDay = current.getDay();
         flight.days.forEach((day) => {
+          const currentDay = current.getDay();
           if (day === currentDay) {
+            const today = new Date(current.toDateString());
             const [hours, min, sec] = flight.time.split(':');
 
             const flightDto: flightItem = {
@@ -67,13 +68,13 @@ export class FlightsController {
               destinationAirport: flight.destinationAirport,
               destinationCity: flight.destinationCity,
               flightNumber: flight.flightNumber,
-              departureDate: current.toJSON().split('T')[0],
+              departureDate: today.toJSON().split('T')[0],
               departureDateTime: new Date(
-                current.setUTCHours(Number(hours), Number(min), Number(sec)),
+                today.setUTCHours(Number(hours), Number(min), Number(sec)),
               ).toJSON(),
               destinationDateTime: new Date(
-                current.setTime(
-                  current.getTime() + flight.durationMinutes * 60 * 1000,
+                today.setTime(
+                  today.getTime() + flight.durationMinutes * 60 * 1000,
                 ),
               ).toJSON(),
               durationMinutes: flight.durationMinutes,
@@ -92,8 +93,8 @@ export class FlightsController {
             result.push(res);
           }
         });
-        current.setDate(current.getDate() + 1);
       });
+      current.setDate(current.getDate() + 1);
     }
     return Promise.all(result);
   }
