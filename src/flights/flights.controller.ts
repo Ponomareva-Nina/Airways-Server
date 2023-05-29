@@ -92,8 +92,8 @@ export class FlightsController {
             result.push(res);
           }
         });
+        current.setDate(current.getDate() + 1);
       });
-      current.setDate(current.getDate() + 1);
     }
     return Promise.all(result);
   }
