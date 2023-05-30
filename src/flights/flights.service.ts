@@ -110,7 +110,10 @@ export class FlightsService {
       },
     });
     const res: FlightFare[] = flights.map((flight) => {
-      return { date: flight.departureDate, flightFare: flight.flightFare };
+      return {
+        date: flight.departureDate,
+        flightFare: flight.flightFare + flight.tax,
+      };
     });
     return res;
   }
