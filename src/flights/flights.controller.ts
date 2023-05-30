@@ -14,6 +14,8 @@ import { getFlightDto } from './dto/get-flight.dto';
 import { createFlightsDto } from './dto/create-flight.dto';
 import { flightsSchedule } from './data/flights-schedule';
 import { flightItem } from './models/flight-item';
+import { getFlightsFareDto } from './dto/get-flights-fare.dto';
+import { FlightFareExample } from 'src/swagger/examples';
 
 @ApiTags('Flights')
 @Controller('flights')
@@ -25,6 +27,17 @@ export class FlightsController {
   @Get('/all')
   getAll() {
     return this.flightsService.getAllFlights();
+  }
+
+  @ApiOperation({ summary: 'Get flights fare statistics for the period' })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+    schema: { example: FlightFareExample },
+  })
+  @Get('/fare')
+  getFlightsFare(@Query() flightsFareDto: getFlightsFareDto) {
+    return this.flightsService.getFlightsFare(flightsFareDto);
   }
 
   @ApiOperation({ summary: 'Get flights by values' })
@@ -54,12 +67,12 @@ export class FlightsController {
     const current = from;
     const result: Array<Promise<Flight>> = [];
 
-    while (current < to) {
-      const currentDay = current.getDay();
-
+    while (current <= to) {
       flightsSchedule.forEach((flight) => {
         flight.days.forEach((day) => {
+          const currentDay = current.getDay();
           if (day === currentDay) {
+            const today = new Date(current.toDateString());
             const [hours, min, sec] = flight.time.split(':');
 
             const flightDto: flightItem = {
@@ -68,17 +81,19 @@ export class FlightsController {
               destinationAirport: flight.destinationAirport,
               destinationCity: flight.destinationCity,
               flightNumber: flight.flightNumber,
-              departureDate: current.toJSON().split('T')[0],
+              departureDate: today.toJSON().split('T')[0],
               departureDateTime: new Date(
-                current.setUTCHours(Number(hours), Number(min), Number(sec)),
+                today.setUTCHours(Number(hours), Number(min), Number(sec)),
               ).toJSON(),
               destinationDateTime: new Date(
-                current.setTime(
-                  current.getTime() + flight.durationMinutes * 60 * 1000,
+                today.setTime(
+                  today.getTime() + flight.durationMinutes * 60 * 1000,
                 ),
               ).toJSON(),
               durationMinutes: flight.durationMinutes,
-              flightFare: flight.flightFare,
+              flightFare:
+                flight.flightFare +
+                this.flightsService.generateRandomAdditionalTax(),
               tax: flight.tax,
               luggageFare: flight.luggageFare,
               seats: flight.seats,

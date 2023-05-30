@@ -1,5 +1,6 @@
 import { ContactInfo } from 'src/booking/models/contact-info.model';
 import { Passenger } from 'src/booking/models/passenger.model';
+import { FlightFare } from 'src/flights/models/flight-fare';
 import { flightItem } from 'src/flights/models/flight-item';
 
 export const FlightExample: flightItem = {
@@ -40,3 +41,18 @@ export const ContactInfoExample: ContactInfo = {
   dialNumber: '+93',
   number: '1234567',
 };
+
+export const FlightFareExample: FlightFare[] = [
+  {
+    date: '2023-04-20',
+    flightFare: 386,
+  },
+  {
+    date: '2023-04-23',
+    flightFare: 386,
+  },
+  {
+    date: '2023-04-24',
+    flightFare: 386,
+  },
+];
