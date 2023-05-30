@@ -8,6 +8,9 @@ import { Flight } from './flights.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { flightItem } from './models/flight-item';
 import { getFlightDto } from './dto/get-flight.dto';
+import { FlightFare } from './models/flight-fare';
+import { getFlightsFareDto } from './dto/get-flights-fare.dto';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class FlightsService {
@@ -85,5 +88,30 @@ export class FlightsService {
     const maxTax = 50;
     const multiplier = Math.random();
     return Math.floor(maxTax * multiplier);
+  }
+
+  public async getFlightsFare(
+    flighsFareDto: getFlightsFareDto,
+  ): Promise<Array<FlightFare>> {
+    const toDate = new Date(flighsFareDto.toDate);
+    const toDateInSec = new Date(flighsFareDto.toDate).setDate(
+      toDate.getDate() + 1,
+    );
+    const flights = await this.FlightsDB.findAll({
+      where: {
+        departureAirport: flighsFareDto.departureAirport,
+        destinationAirport: flighsFareDto.destinationAirport,
+        departureDateTime: {
+          [Op.and]: {
+            [Op.gte]: new Date(flighsFareDto.fromDate),
+            [Op.lte]: new Date(toDateInSec),
+          },
+        },
+      },
+    });
+    const res: FlightFare[] = flights.map((flight) => {
+      return { date: flight.departureDate, flightFare: flight.flightFare };
+    });
+    return res;
   }
 }
