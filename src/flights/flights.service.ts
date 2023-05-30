@@ -85,7 +85,7 @@ export class FlightsService {
   }
 
   public generateRandomAdditionalTax(): number {
-    const maxTax = 50;
+    const maxTax = 70;
     const multiplier = Math.random();
     return Math.floor(maxTax * multiplier);
   }
