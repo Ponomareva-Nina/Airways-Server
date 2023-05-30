@@ -78,7 +78,9 @@ export class FlightsController {
                 ),
               ).toJSON(),
               durationMinutes: flight.durationMinutes,
-              flightFare: flight.flightFare,
+              flightFare:
+                flight.flightFare +
+                this.flightsService.generateRandomAdditionalTax(),
               tax: flight.tax,
               luggageFare: flight.luggageFare,
               seats: flight.seats,
