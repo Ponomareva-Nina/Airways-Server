@@ -97,9 +97,7 @@ export class FlightsController {
               tax: flight.tax,
               luggageFare: flight.luggageFare,
               seats: flight.seats,
-              booked: Math.abs(
-                Math.floor((Math.random() * flight.seats) / 2) - flight.seats,
-              ),
+              booked: Math.floor(Math.random() * (flight.seats - 40)),
               direct: flight.direct,
               transferAirport: flight.transferAirport || null,
               transferCity: flight.transferCity || null,
