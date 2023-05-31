@@ -109,11 +109,25 @@ export class FlightsService {
         },
       },
     });
-    const res: FlightFare[] = flights.map((flight) => {
+    const fares: FlightFare[] = flights.map((flight) => {
       return {
         date: flight.departureDate,
         flightFare: flight.flightFare + flight.tax,
       };
+    });
+    let res: FlightFare[] = [];
+    fares.forEach((item) => {
+      const duplicateDate = res.find((resFare) => resFare.date === item.date);
+      if (!duplicateDate) {
+        res.push(item);
+      } else if (duplicateDate.flightFare > item.flightFare) {
+        res = res.map((fare) => {
+          if (fare.date === item.date) {
+            return item;
+          }
+          return fare;
+        });
+      }
     });
     return res;
   }
