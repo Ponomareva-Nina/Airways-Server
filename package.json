@@ -24,6 +24,7 @@
     "@nestjs/swagger": "^6.3.0",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
+    "google-auth-library": "^8.8.0",
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",

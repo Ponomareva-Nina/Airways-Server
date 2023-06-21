@@ -10,7 +10,7 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/users.model';
 import { authUserDto } from './dto/auth-user.dto';
-import { TokenPayload } from './models/token-payload.model';
+import { GoogleTokenPayload, TokenPayload } from './models/token-payload.model';
 import { UserData } from './models/userData';
 import { Token } from './models/token.model';
 
@@ -24,6 +24,31 @@ export class AuthService {
   async login(authUserDto: authUserDto) {
     const user = await this.validateUser(authUserDto);
     return this.generateToken(user);
+  }
+
+  async authWithGoogle(credentials: string) {
+    const decoded = this.jwtService.decode(credentials) as GoogleTokenPayload;
+    console.log(decoded);
+    if (decoded && decoded.email) {
+      const user = await this.userService.getUserByEmail(decoded.email);
+      console.log(user);
+      if (user) {
+        return this.generateToken(user);
+      }
+      if (!user) {
+        const newUser = await this.userService.createUser({
+          firstName: decoded.given_name,
+          lastName: decoded.family_name,
+          email: decoded.email,
+          password: null,
+          dateOfBirth: null,
+          sex: null,
+          phone: null,
+          citizenship: null,
+        });
+        return this.generateToken(newUser);
+      }
+    }
   }
 
   async register(userDto: createUserDto) {
@@ -53,7 +78,7 @@ export class AuthService {
   }
 
   private generateToken(user: User) {
-    const payload = { id: user.id, email: user.email, phone: user.phone };
+    const payload = { id: user.id, email: user.email };
     return { token: this.jwtService.sign(payload) };
   }
 

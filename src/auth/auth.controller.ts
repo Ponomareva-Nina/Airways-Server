@@ -50,4 +50,15 @@ export class AuthController {
   registration(@Body() userDto: createUserDto) {
     return this.authService.register(userDto);
   }
+
+  @ApiOperation({ summary: 'Auth with Google' })
+  @ApiResponse({ status: 200, type: Token })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Credentials not ok',
+  })
+  @Post('/google')
+  authWithGoogle(@Body() credentials: Token) {
+    return this.authService.authWithGoogle(credentials.token);
+  }
 }
